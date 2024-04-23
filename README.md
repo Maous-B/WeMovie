@@ -1,14 +1,5 @@
-# SituationVUEJS
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+# WeMovie : Application de cinéma pour rechercher des films
+![WeMovie](https://github.com/Maous-B/WeMovie/assets/79797065/d940434e-bb35-4e83-8a0d-2a61210aa113)
 
 ## Project Setup
 
