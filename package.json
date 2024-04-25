@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "aos": "^2.3.4",
     "bootstrap": "^5.3.2",
     "bootstrap-vue": "^2.23.1",
     "bulma": "^0.9.4",
