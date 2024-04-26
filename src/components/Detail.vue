@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import {findMovieById, hardcodedSizes} from "@/imports.mjs";
 
 let movie = ref(null)
+let testStr = ""
 const router = useRouter();
 
 onMounted(async () => {
@@ -17,7 +18,14 @@ onMounted(async () => {
   try {
     movie.value = await findMovieById(movieId)
     movie.value.poster_path = 'https://image.tmdb.org/t/p/'  + hardcodedSizes["poster_sizes"][4] + movie.value.poster_path
-    console.log(movie.value.poster_path)
+    console.log(movie.value.genres["names"])
+    /*
+    for(let i = 0; i < movie.value.genres.length; i++){
+      testStr += movie.value.genres[i]["names"] + " "
+    }*/
+    console.log("testStr = " + testStr)
+    movie.value.genres = testStr
+
   } catch (error) {
     console.error('Erreur lors de la récupération des détails du film :', error);
   }
@@ -30,32 +38,33 @@ onMounted(async () => {
 
   <div class ="containerObject is-desktop">
     <div class="centerObject">
-      <div class="details is-multiline is-centered mt-4" v-if="movie">
-        <div class="columns column is-one-quarter">
+      <div class="container has-text-centered is-full mt-6">
+        <div class="details has-text-centered mt-6" v-if="movie">
+          <div class="columns column is-one-quarter">
 
-            <div data-aos="flip-up" class="card">
-              <div class="card-image">
-                <figure class="image is-4by5">
-                  <img :src="movie.poster_path" alt="Poster du film">
-                </figure>
-              </div>
-              <div class="card-content">
-                <div class="content">
-                  <h1> Détails du film : {{ movie.title }} ({{ movie.original_title}})</h1>
+              <div data-aos="flip-up" class="card">
+                <div class="card-image">
+                  <figure class="image is-4by5">
+                    <img :src="movie.poster_path" alt="Poster du film">
+                  </figure>
+                </div>
+                <div class="card-content">
                   <div class="content">
-                    <h4> Description : {{ movie.overview }}</h4>
-                    <h4> Réalisé le : {{ movie.release_date }}</h4>
-                    <h4> ID du film : {{ movie.id }}</h4>
-                    <h4> Popularité du film : {{ movie.popularity }}</h4>
-
+                    <h1> Détails du film : {{ movie.title }} ({{ movie.original_title}})</h1>
+                    <div class="content">
+                      <h4> Description : {{ movie.overview }}</h4>
+                      <h4> Réalisé le : {{ movie.release_date }}</h4>
+                      <h4> ID du film : {{ movie.id }}</h4>
+                      <h4> Popularité du film : {{ movie.popularity }}</h4>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-      </div>
+        </div>
       <div v-else>
         <p>Chargement des détails du film...</p>
+      </div>
       </div>
     </div>
   </div>
