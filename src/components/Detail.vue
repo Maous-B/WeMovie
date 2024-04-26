@@ -70,7 +70,7 @@ onMounted(async () => {
   justify-items: center;;
 }
 .centerObject{
-  width: 1200px;
+  width: 2250px;
 }
 .is-full {
   width: 100%;
