@@ -6,6 +6,10 @@ export const findMovie = async (title) => {
     return await moviedb.searchMovie(title)
 }
 
+export const findMovieById = async (idFilm) => {
+    return await moviedb.movieInfo({id:idFilm})
+}
+
 export const hardcodedSizes =
     {
         backdrop_sizes: [
