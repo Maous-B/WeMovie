@@ -18,13 +18,6 @@ onMounted(async () => {
   try {
     movie.value = await findMovieById(movieId)
     movie.value.poster_path = 'https://image.tmdb.org/t/p/'  + hardcodedSizes["poster_sizes"][4] + movie.value.poster_path
-    console.log(movie.value.genres["names"])
-    /*
-    for(let i = 0; i < movie.value.genres.length; i++){
-      testStr += movie.value.genres[i]["names"] + " "
-    }*/
-    console.log("testStr = " + testStr)
-    movie.value.genres = testStr
 
   } catch (error) {
     console.error('Erreur lors de la récupération des détails du film :', error);
@@ -52,10 +45,9 @@ onMounted(async () => {
                   <div class="content">
                     <h1> Détails du film : {{ movie.title }} ({{ movie.original_title}})</h1>
                     <div class="content">
-                      <h4> Description : {{ movie.overview }}</h4>
-                      <h4> Réalisé le : {{ movie.release_date }}</h4>
-                      <h4> ID du film : {{ movie.id }}</h4>
-                      <h4> Popularité du film : {{ movie.popularity }}</h4>
+                      <h6> Description : {{ movie.overview }}</h6>
+                      <h6> Date d'apparition : {{ movie.release_date }}</h6>
+                      <h6> Popularité : {{ movie.popularity }}</h6>
                     </div>
                   </div>
                 </div>
