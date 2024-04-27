@@ -6,6 +6,10 @@ import Detail from "@/components/Detail.vue";
 
 const routes = [
     {
+        path: '/',
+        component: Home
+    },
+    {
         path: '/home',
         component: Home
     },

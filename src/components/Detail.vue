@@ -4,8 +4,25 @@ import { useRouter } from 'vue-router';
 import {findMovieById, hardcodedSizes} from "@/imports.mjs";
 
 let movie = ref(null)
-let testStr = ""
 const router = useRouter();
+
+let reviews = ref([]);
+let review = ref({ name: '', comment: '', rating: 0 });
+
+// Fonction appelée lors de la soumission du formulaire
+const submitReview = () => {
+    const { name, comment, rating } = review.value;
+    const movieId = router.currentRoute.value.params.id;
+    if (rating < 0 || rating > 5) {
+        console.error('La note doit être comprise entre 0 et 5.');
+        return;
+    }
+
+    const newReview = { id: movieId, name, comment, rating };
+    reviews.value.push(newReview);
+    localStorage.setItem('movieReviews', JSON.stringify(reviews.value));
+    review.value = { name: '', comment: '', rating: 0 };
+};
 
 onMounted(async () => {
   const movieId = router.currentRoute.value.params.id;
@@ -14,6 +31,12 @@ onMounted(async () => {
     console.error('ID du film non défini dans les paramètres de l\'URL');
     return;
   }
+
+  const storedReviews = localStorage.getItem('movieReviews');
+  if (storedReviews) {
+      reviews.value = JSON.parse(storedReviews);
+  }
+  reviews.value = reviews.value.filter(review => review.id === movieId);
 
   try {
     movie.value = await findMovieById(movieId)
@@ -41,7 +64,7 @@ onMounted(async () => {
                     <img :src="movie.poster_path" alt="Poster du film">
                   </figure>
                 </div>
-                <div class="card-content">
+                <div class="card-content mt-6">
                   <div class="content">
                     <h1> Détails du film : {{ movie.title }} ({{ movie.original_title}})</h1>
                     <div class="content">
@@ -51,6 +74,50 @@ onMounted(async () => {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <!-- Formulaire pour enregistrer un avis -->
+              <div class="card-content">
+                  <h2>Donner votre avis sur le film :</h2>
+                  <form>
+                      <div class="field">
+                          <label class="label">Nom :</label>
+                          <div class="control">
+                              <input class="input" v-model="review.name" type="text" placeholder="Votre nom">
+                          </div>
+                      </div>
+                      <div class="field">
+                          <label class="label">Avis :</label>
+                          <div class="control">
+                              <textarea class="textarea" v-model="review.comment" placeholder="Votre avis sur le film"></textarea>
+                          </div>
+                      </div>
+                      <div class="field">
+                          <label class="label">Note :</label>
+                          <div class="control">
+                              <input class="input" v-model.number="review.rating" type="number" min="0" max="5" placeholder="Note de 0 à 5">
+                          </div>
+                      </div>
+                      <div class="field">
+                          <div class="control">
+                              <button @click="submitReview()" class="button is-primary">Soumettre le commentaire</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+
+              <!-- Affichage des commentaires précédents -->
+              <div class="card-content" v-if="reviews.length > 0">
+                  <h2>Commentaires précédents :</h2>
+                  <ul>
+                      <li v-for="(review, index) in reviews" :key="index">
+                          <p><strong>{{ review.name }}</strong> - Note : {{ review.rating }}</p>
+                          <p>{{ review.comment }}</p>
+                      </li>
+                  </ul>
+              </div>
+              <div class="card-content" v-else>
+                  <p>Aucun commentaire pour le moment.</p>
               </div>
             </div>
         </div>

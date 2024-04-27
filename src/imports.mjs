@@ -6,6 +6,9 @@ export const findMovie = async (title) => {
     return await moviedb.searchMovie(title)
 }
 
+export  const discoverMovies = async() =>{
+    return await moviedb.discoverMovie()
+}
 export const findMovieById = async (idFilm) => {
     return await moviedb.movieInfo({id:idFilm})
 }
